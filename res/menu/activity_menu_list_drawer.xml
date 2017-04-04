@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:title="Menu Category">
+        <menu>
+            <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/menuAll"
+                    android:title="All Category"
+                    />
+                <item
+                    android:id="@+id/menuMeat"
+                    android:title="Meat"
+                    android:icon="@drawable/beef_icon"/>
+                <item
+                    android:id="@+id/menuSalad"
+                    android:title="Salad"
+                    android:icon="@drawable/salad"/>
+                <item
+                    android:id="@+id/menuDessert"
+                    android:title="Dessert"
+                    android:icon="@drawable/confectionery512"/>
+                <item
+                    android:id="@+id/menuQuick"
+                    android:title="Quick and Easy"
+                    android:icon="@drawable/quickandeasy"/>
+                <item
+                    android:id="@+id/menuLow"
+                    android:title="Low Carbo"
+                    android:icon="@drawable/lowcarbs"/>
+                <item
+                    android:id="@+id/menuFried"
+                    android:title="Fried"
+                    android:icon="@drawable/fried"/>
+                <item
+                    android:id="@+id/menuBaked"
+                    android:title="Baked"/>
+                <item
+                    android:id="@+id/menuSoup"
+                    android:title="Soups"
+                    android:icon="@drawable/soups"/>
+            </group>
+        </menu>
+    </item>
+
+    <item android:title="">
+        <menu>
+            <item
+                android:id="@+id/menuSetting"
+                android:icon="@drawable/setting"
+                android:title="Setting" />
+            <item
+                android:id="@+id/menuHelp"
+                android:icon="@drawable/help"
+                android:title="Help" />
+        </menu>
+    </item>
+
+</menu>
