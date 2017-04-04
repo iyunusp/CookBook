@@ -10,11 +10,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,7 +28,7 @@ import iyp.cookbook.listing.Data;
 public class MenuList extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     Account account;
-    private RecyclerView banner;
+    private HorizontalScrollView banner;
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         return false;
@@ -44,7 +44,6 @@ public class MenuList extends AppCompatActivity
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_menu_list);
-
         menuchart=(ImageView)findViewById(R.id.menuChart);
         menuchart.setOnClickListener(new View.OnClickListener() {
             @Override
