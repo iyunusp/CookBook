@@ -15,20 +15,23 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             app:popupTheme="@style/AppTheme.PopupOverlay">
-
+            <ImageView
+                android:layout_width="95dp"
+                android:layout_height="35dp"
+                android:background="@drawable/title"/>
             <SearchView
                 android:layout_width="180dp"
                 android:layout_height="35dp"
-                android:layout_marginLeft="50dp"
-                android:layout_marginRight="5dp"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="10dp"
                 android:background="#50ffffff"
                 android:inputType="text"
                 android:theme="@style/AppTheme.PopupOverlay"/>
             <android.support.v7.widget.AppCompatImageView
                 android:id="@+id/menuChart"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:background="@drawable/dessert"/>
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:background="@drawable/bookmark"/>
         </android.support.v7.widget.Toolbar>
     </android.support.design.widget.AppBarLayout>
 
