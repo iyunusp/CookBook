@@ -12,6 +12,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -59,12 +60,14 @@ public class RecipeItemView extends AppCompatActivity
                 Toast.makeText(getApplicationContext(), "your chart are empty", Toast.LENGTH_SHORT).show();
             }
         });
-
+        //passing user detail
         this.account = (Account) getIntent().getSerializableExtra("user");
 
+        //
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        //side nav setting
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -77,6 +80,36 @@ public class RecipeItemView extends AppCompatActivity
         viewpager = (ViewPager) findViewById(R.id.menuHome);
         viewpager.setAdapter(section);
 
+        //clickable text view
+        TextView overview=(TextView)findViewById(R.id.textOverview);
+        TextView ingredients=(TextView)findViewById(R.id.textIngredients);
+        TextView steps=(TextView)findViewById(R.id.textSteps);
+        TextView community=(TextView)findViewById(R.id.textCommunity);
+        overview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                viewpager.setCurrentItem(0);
+            }
+        });
+        ingredients.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                viewpager.setCurrentItem(1);
+            }
+        });
+        steps.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                viewpager.setCurrentItem(2);
+            }
+        });
+        community.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                viewpager.setCurrentItem(3);
+            }
+        });
+        //side nav
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         navigationView.setItemIconTintList(null);
@@ -143,16 +176,12 @@ public class RecipeItemView extends AppCompatActivity
 
         @Override
         public Fragment getItem(int position) {
-            if(position==0){
-                return  MenuOverviewFragment.newInstance();
-            }else if(position==1){
-                return  MenuIngredientsFragment.newInstance();
-            }else if(position==3){
-                return MenuStepsFragment.newInstance();
-            }else if(position==4){
-                return MenuCommunityFragment.newInstance();
-            }else{
-                return MenuOverviewFragment.newInstance();
+            Log.e("curpos",position+"");
+            switch(position){
+                case 1: return MenuIngredientsFragment.newInstance();
+                case 2: return MenuStepsFragment.newInstance();
+                case 3: return MenuCommunityFragment.newInstance();
+                default: return MenuOverviewFragment.newInstance();//default is home screen
             }
         }
 
