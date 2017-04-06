@@ -49,7 +49,7 @@ public class SignUp extends AsyncTask {
             client.execute(request);
             ret="success";
         }catch (Exception e){
-            ret="failed";
+            ret="Connection Failed";
         }
         return null;
     }

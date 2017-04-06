@@ -10,6 +10,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import java.util.Collections;
 import java.util.List;
+
+import iyp.cookbook.account.Account;
 import iyp.cookbook.listing.Data;
 
 public class HorizontalAdapter extends RecyclerView.Adapter<HorizontalAdapter.MyViewHolder> {
@@ -17,11 +19,12 @@ public class HorizontalAdapter extends RecyclerView.Adapter<HorizontalAdapter.My
 
     List<Data> horizontalList = Collections.emptyList();
     Context context;
+    Account account;
 
-
-    public HorizontalAdapter(List<Data> horizontalList, Context context) {
+    public HorizontalAdapter(List<Data> horizontalList, Context context, Account account) {
         this.horizontalList = horizontalList;
         this.context = context;
+        this.account=account;
     }
 
 
@@ -49,8 +52,9 @@ public class HorizontalAdapter extends RecyclerView.Adapter<HorizontalAdapter.My
         holder.imageicon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(context,Recipe_view.class);
+                Intent intent=new Intent(context,RecipeItemView.class);
                 intent.putExtra("title",horizontalList.get(position).Title);
+                intent.putExtra("user",account);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
 

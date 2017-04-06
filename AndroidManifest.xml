@@ -23,11 +23,11 @@
             android:label="@string/title_activity_menu_list"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".Register" />
+        <activity android:name=".Preview_menu" />
         <activity
-            android:name=".Recipe_view"
-            android:label="@string/title_activity_recipe_view"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".Preview_menu"></activity>
+            android:name=".RecipeItemView"
+            android:label="@string/title_activity_recipe_item_view"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

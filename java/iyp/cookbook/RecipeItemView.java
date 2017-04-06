@@ -1,34 +1,42 @@
 package iyp.cookbook;
 
-
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import iyp.cookbook.account.Account;
-import iyp.cookbook.listing.Data;
+import iyp.cookbook.fragment.MenuCommunityFragment;
+import iyp.cookbook.fragment.MenuIngredientsFragment;
+import iyp.cookbook.fragment.MenuOverviewFragment;
+import iyp.cookbook.fragment.MenuStepsFragment;
 
-public class MenuList extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+public class RecipeItemView extends AppCompatActivity
+        implements NavigationView.OnNavigationItemSelectedListener,
+        MenuOverviewFragment.OnFragmentInteractionListener,
+        MenuIngredientsFragment.OnFragmentInteractionListener,
+        MenuStepsFragment.OnFragmentInteractionListener,
+        MenuCommunityFragment.OnFragmentInteractionListener{
+
     Account account;
-    private HorizontalScrollView banner;
+    ViewPager viewpager;
+    SectionsPagerAdapter section;
+
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         return false;
@@ -37,67 +45,52 @@ public class MenuList extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        TextView profilUname,profilMail;
-        ImageView profilImage,menuchart;
+        setContentView(R.layout.activity_recipe_item_view);
+        TextView profilUname, profilMail;
+        ImageView profilImage, menuchart;
 
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.activity_menu_list);
-        menuchart=(ImageView)findViewById(R.id.menuChart);
+        setContentView(R.layout.activity_recipe_item_view);
+        menuchart = (ImageView) findViewById(R.id.menuChart);
         menuchart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getApplicationContext(),"your chart are empty", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "your chart are empty", Toast.LENGTH_SHORT).show();
             }
         });
-        //TODO database reader
-        List<Data> data = new ArrayList<>();
-        data.add(new Data( "Menu 1", R.drawable.belakangprofilepicture,0));
-        data.add(new Data( "Menu 2", R.drawable.belakangprofilepicture,0));
-        data.add(new Data( "Menu3", R.drawable.belakangprofilepicture,0));
-        /*data.add(new Data("", "Image 2"));
-        data.add(new Data( "", "Image 3"));
-        data.add(new Data( "", "Image 1"));
-        data.add(new Data( "", "Image 2"));
-        data.add(new Data( "", "Image 3"));
-        data.add(new Data( "", "Image 1"));
-        data.add(new Data( "", "Image 2"));
-        data.add(new Data("", "Image 3"));*/
-        this.account=(Account) getIntent().getSerializableExtra("user");
-        Toast.makeText(getApplicationContext(), "Welcome "+account.getRealname(), Toast.LENGTH_LONG).show();
 
-        RecyclerView myList = (RecyclerView) findViewById(R.id.recview);
-        RecyclerView myList1 = (RecyclerView) findViewById(R.id.newview);
-        myList.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false));
-        myList1.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false));
-        myList.setAdapter(new HorizontalAdapter(data,getApplicationContext(),account));
-        myList1.setAdapter(new HorizontalAdapter(data,getApplicationContext(),account));
+        this.account = (Account) getIntent().getSerializableExtra("user");
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer,toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         toggle.setDrawerIndicatorEnabled(false);//remove hamburger icon
         drawer.setDrawerListener(toggle);
         toggle.syncState();
+
+        //tabbed TODO fragment help
+        section= new SectionsPagerAdapter(getSupportFragmentManager());
+        viewpager = (ViewPager) findViewById(R.id.menuHome);
+        viewpager.setAdapter(section);
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         navigationView.setItemIconTintList(null);
         //how to edit text in nav list header
-        View header=navigationView.getHeaderView(0);
-        profilUname=(TextView)header.findViewById(R.id.UnameTxt);
-        profilMail=(TextView)header.findViewById(R.id.Mailtxt);
-        profilImage=(ImageView)header.findViewById(R.id.Profilview) ;
+        View header = navigationView.getHeaderView(0);
+        profilUname = (TextView) header.findViewById(R.id.UnameTxt);
+        profilMail = (TextView) header.findViewById(R.id.Mailtxt);
+        profilImage = (ImageView) header.findViewById(R.id.Profilview);
         profilUname.setText(this.account.getRealname());
         profilMail.setText(this.account.getMail());
         profilImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getApplicationContext(),"You're Nice", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "You're Nice", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -111,6 +104,7 @@ public class MenuList extends AppCompatActivity
             super.onBackPressed();
         }
     }
+
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -136,7 +130,36 @@ public class MenuList extends AppCompatActivity
         return true;
     }
 
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
+    }
+
+    public class SectionsPagerAdapter extends FragmentPagerAdapter {
+
+        public SectionsPagerAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            if(position==0){
+                return  MenuOverviewFragment.newInstance();
+            }else if(position==1){
+                return  MenuIngredientsFragment.newInstance();
+            }else if(position==3){
+                return MenuStepsFragment.newInstance();
+            }else if(position==4){
+                return MenuCommunityFragment.newInstance();
+            }else{
+                return MenuOverviewFragment.newInstance();
+            }
+        }
+
+        @Override
+        public int getCount() {
+            return 4;
+        }
+    }
 
 }
-
-

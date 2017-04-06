@@ -67,15 +67,20 @@ public class SignIn extends AsyncTask {
                 ret="failed";
             return ret;
         }catch (Exception e){
-            ret+="failed";
+            ret="error";
             return ret;
         }
     }
 
     @Override
     protected void onPostExecute(Object o) {
-        if (ret.contains("failed")) {
+        if (ret.equals("failed")) {
             Snackbar.make(v, "Username or Password is Incorrect", Snackbar.LENGTH_LONG)
+                    .setAction("Action", null).show();
+            progDailog.dismiss();
+            return;
+        } else if(ret.equals("error")){
+            Snackbar.make(v, "Connection Failed", Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show();
             progDailog.dismiss();
             return;
