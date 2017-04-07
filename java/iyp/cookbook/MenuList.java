@@ -2,6 +2,7 @@ package iyp.cookbook;
 
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -10,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -28,7 +30,10 @@ import iyp.cookbook.listing.Data;
 public class MenuList extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     Account account;
-    private HorizontalScrollView banner;
+    private ImageView banner[]= new ImageView[5];
+    private HorizontalScrollView banners;
+    private Handler handler= new Handler();
+    private Runnable run;
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         return false;
@@ -55,7 +60,7 @@ public class MenuList extends AppCompatActivity
         List<Data> data = new ArrayList<>();
         data.add(new Data( "Menu 1", R.drawable.belakangprofilepicture,0));
         data.add(new Data( "Menu 2", R.drawable.belakangprofilepicture,0));
-        data.add(new Data( "Menu3", R.drawable.belakangprofilepicture,0));
+        data.add(new Data( "Menu 3", R.drawable.belakangprofilepicture,0));
         /*data.add(new Data("", "Image 2"));
         data.add(new Data( "", "Image 3"));
         data.add(new Data( "", "Image 1"));
@@ -76,6 +81,32 @@ public class MenuList extends AppCompatActivity
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        //banners setting
+        banners=(HorizontalScrollView)findViewById(R.id.banner);
+        banner[0]=(ImageView)findViewById(R.id.iconBanner1);
+        banner[1]=(ImageView)findViewById(R.id.iconBanner2);
+        banner[2]=(ImageView)findViewById(R.id.iconBanner3);
+        banner[3]=(ImageView)findViewById(R.id.iconBanner4);
+        banner[4]=(ImageView)findViewById(R.id.iconBanner5);
+        final DisplayMetrics metric=new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(metric);
+        for(ImageView ban:banner){
+            ban.getLayoutParams().width=metric.widthPixels-(8*(int)metric.density);
+        }
+        run= new Runnable() {
+            int i=1;
+            @Override
+            public void run() {
+                if(i==5) {//reach max
+                    banners.smoothScrollTo(0, 0);
+                    i=1;
+                }
+                banners.smoothScrollTo((metric.widthPixels*i),0);//8 == margin
+                i++;
+                handler.postDelayed(run,5000);
+            }
+        };
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -101,7 +132,26 @@ public class MenuList extends AppCompatActivity
             }
         });
     }
-
+    @Override
+    public void onPause(){
+        super.onPause();
+        handler.removeCallbacks(run);
+    }
+    @Override
+    public void onResume(){
+        super.onResume();
+        handler.postDelayed(run,5000);
+    }
+    @Override
+    public void onStop(){
+        super.onStop();
+        handler.removeCallbacks(run);
+    }
+    @Override
+    public void onRestart(){
+        super.onRestart();
+        handler.postDelayed(run,5000);
+    }
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
