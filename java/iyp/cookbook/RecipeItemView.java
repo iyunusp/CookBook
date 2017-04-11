@@ -1,5 +1,10 @@
 package iyp.cookbook;
 
+import android.content.Context;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -31,12 +36,23 @@ public class RecipeItemView extends AppCompatActivity
         MenuOverviewFragment.OnFragmentInteractionListener,
         MenuIngredientsFragment.OnFragmentInteractionListener,
         MenuStepsFragment.OnFragmentInteractionListener,
-        MenuCommunityFragment.OnFragmentInteractionListener{
+        MenuCommunityFragment.OnFragmentInteractionListener,
+        SensorEventListener{
 
-    Account account;
-    ViewPager viewpager;
-    SectionsPagerAdapter section;
-
+    private Account account;
+    private ViewPager viewpager;
+    private SectionsPagerAdapter section;
+    //sens
+    private Sensor sense;
+    private SensorManager senseMan;
+    private long timestamp;
+    private int positem=0;
+    private void testsensor(){
+        senseMan=(SensorManager)getSystemService(Context.SENSOR_SERVICE);
+        sense=senseMan.getDefaultSensor(Sensor.TYPE_PROXIMITY);
+        timestamp= System.currentTimeMillis();
+    }
+    //sens-end
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         return false;
@@ -61,7 +77,8 @@ public class RecipeItemView extends AppCompatActivity
         });
         //passing user detail
         this.account = (Account) getIntent().getSerializableExtra("user");
-
+        //test sensor
+        testsensor();
         //
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -126,7 +143,16 @@ public class RecipeItemView extends AppCompatActivity
             }
         });
     }
-
+    @Override
+    public void onResume(){
+        super.onResume();
+        senseMan.registerListener(this, sense, SensorManager.SENSOR_DELAY_NORMAL);
+    }
+    @Override
+    public void onPause(){
+        super.onPause();
+        senseMan.unregisterListener(this);
+    }
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -164,6 +190,21 @@ public class RecipeItemView extends AppCompatActivity
 
     @Override
     public void onFragmentInteraction(Uri uri) {
+
+    }
+
+    @Override
+    public void onSensorChanged(SensorEvent sensorEvent) {
+        if((sensorEvent.timestamp)-timestamp<120000000) {//good enough?
+            viewpager.setCurrentItem(positem);
+            positem++;
+            if(positem>3) positem=0;
+        }
+        timestamp=sensorEvent.timestamp;
+    }
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int i) {
 
     }
 

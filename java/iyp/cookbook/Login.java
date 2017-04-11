@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import iyp.cookbook.account.Account;
 import iyp.cookbook.account.SignIn;
 
 public class Login extends Activity {
@@ -34,7 +35,10 @@ public class Login extends Activity {
         skip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), Preview_menu.class);
+                //Intent intent = new Intent(getApplicationContext(), Preview_menu.class);
+                Account a=new Account("GUEST","GUEST","GUEST","GUEST@GUEST.COM","UNKNOWN","UNKNOWN");
+                Intent intent=new Intent(getApplicationContext(),MenuList.class);
+                intent.putExtra("user",a);
                 startActivity(intent);
             }
         });

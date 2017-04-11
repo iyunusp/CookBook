@@ -8,7 +8,7 @@ import java.io.Serializable;
 
 public class Account implements Serializable {
     private String uname,pass,mail,address,phone,realname;
-    protected Account(String uname,String pass,String realname,String mail,String address,String phone) {
+    public Account(String uname, String pass, String realname, String mail, String address, String phone) {
         this.uname=uname;
         this.pass=pass;
         this.mail=mail;

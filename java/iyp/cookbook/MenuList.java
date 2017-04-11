@@ -12,6 +12,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -34,6 +35,7 @@ public class MenuList extends AppCompatActivity
     private HorizontalScrollView banners;
     private Handler handler= new Handler();
     private Runnable run;
+    private boolean status=false;
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         return false;
@@ -94,13 +96,15 @@ public class MenuList extends AppCompatActivity
             ban.getLayoutParams().width=metric.widthPixels-(8*(int)metric.density);
         }
         run= new Runnable() {
-            int i=1;
+            int i=0;
             @Override
             public void run() {
-                if(i==5) {//reach max
+                status=true;
+                if(i>4) {//reach max
                     banners.smoothScrollTo(0, 0);
-                    i=1;
+                    i=0;
                 }
+                Log.e("slide to",""+i);
                 banners.smoothScrollTo((metric.widthPixels*i),0);//8 == margin
                 i++;
                 handler.postDelayed(run,5000);
@@ -134,23 +138,16 @@ public class MenuList extends AppCompatActivity
     }
     @Override
     public void onPause(){
-        super.onPause();
         handler.removeCallbacks(run);
+        status=false;
+        super.onPause();
     }
     @Override
     public void onResume(){
+        if(!status) {
+            handler.postDelayed(run, 5000);
+        }
         super.onResume();
-        handler.postDelayed(run,5000);
-    }
-    @Override
-    public void onStop(){
-        super.onStop();
-        handler.removeCallbacks(run);
-    }
-    @Override
-    public void onRestart(){
-        super.onRestart();
-        handler.postDelayed(run,5000);
     }
     @Override
     public void onBackPressed() {
