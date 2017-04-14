@@ -18,9 +18,10 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_marginLeft="16dp"
             android:layout_weight="1"
             android:text="Ingredients"
-            android:textSize="18dp"
+            android:textSize="22dp"
             android:gravity="bottom"
             android:textStyle="bold"/>
         <android.support.v7.widget.RecyclerView

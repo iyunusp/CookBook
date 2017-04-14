@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import java.util.Collections;
 import java.util.List;
@@ -77,6 +78,12 @@ public class MenuIngredientsFragment extends Fragment {
         start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                for(IngredientData i:ingredient){
+                    if(i.clicked==false){
+                        Toast.makeText(getActivity().getApplicationContext(),"incomplete Ingredients",Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                }
                 viewpager.setCurrentItem(2);
             }
         });

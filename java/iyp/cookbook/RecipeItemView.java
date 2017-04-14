@@ -38,6 +38,7 @@ public class RecipeItemView extends AppCompatActivity
     private ViewPager viewpager;
     private SectionsPagerAdapter section;
     private MenuData menu;
+    private TextView overview,ingredients,steps,community;
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         return false;
@@ -78,12 +79,40 @@ public class RecipeItemView extends AppCompatActivity
         section= new SectionsPagerAdapter(getSupportFragmentManager());
         viewpager = (ViewPager) findViewById(R.id.menuHome);
         viewpager.setAdapter(section);
+        viewpager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                ingredients.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                steps.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                community.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                overview.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                //selectedcolor
+                if(position==0)
+                    overview.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+                else if(position==1)
+                    ingredients.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+                else if(position==2)
+                    steps.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+                else if(position==3)
+                    community.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
 
         //clickable text view
-        TextView overview=(TextView)findViewById(R.id.textOverview);
-        TextView ingredients=(TextView)findViewById(R.id.textIngredients);
-        TextView steps=(TextView)findViewById(R.id.textSteps);
-        TextView community=(TextView)findViewById(R.id.textCommunity);
+        overview=(TextView)findViewById(R.id.textOverview);
+        ingredients=(TextView)findViewById(R.id.textIngredients);
+        steps=(TextView)findViewById(R.id.textSteps);
+        community=(TextView)findViewById(R.id.textCommunity);
         overview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -167,7 +196,6 @@ public class RecipeItemView extends AppCompatActivity
     }
 
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
-
         public SectionsPagerAdapter(FragmentManager fm) {
             super(fm);
         }
@@ -175,10 +203,13 @@ public class RecipeItemView extends AppCompatActivity
         @Override
         public Fragment getItem(int position) {
             switch(position){
-                case 1: return MenuIngredientsFragment.newInstance(menu.imageID,menu.ingredients,viewpager);
-                case 2: return MenuStepsFragment.newInstance();
-                case 3: return MenuCommunityFragment.newInstance();
-                default: return MenuOverviewFragment.newInstance(menu.Title,menu.Desc,menu.imageID,menu.minute,menu.star,viewpager);//default is home screen
+                case 1:return MenuIngredientsFragment.newInstance(menu.imageID,menu.ingredients,viewpager);
+                case 2:return MenuStepsFragment.newInstance();
+                case 3:return MenuCommunityFragment.newInstance();
+                default:{
+                    overview.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+                    return MenuOverviewFragment.newInstance(menu.Title,menu.Desc,menu.imageID,menu.minute,menu.star,viewpager);//default is home screen
+                }
             }
         }
 
