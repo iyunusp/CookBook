@@ -5,12 +5,47 @@
     tools:context="iyp.cookbook.fragment.MenuIngredientsFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="Ingredient"
-        android:textColor="#FFFFFF"
-        android:background="#000000"/>
+        android:weightSum="10"
+        android:orientation="vertical">
+        <ImageView
+            android:id="@+id/menuImageIngredient"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="3"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:text="Ingredients"
+            android:textSize="18dp"
+            android:gravity="bottom"
+            android:textStyle="bold"/>
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/IngredientList"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="4.75"></android.support.v7.widget.RecyclerView>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1.25"
+            android:padding="10dp"
+            android:orientation="horizontal">
+            <ImageButton
+                android:id="@+id/ingredientStart"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"/>
+            <ImageButton
+                android:id="@+id/ingredientOrder"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"/>
+        </LinearLayout>
+
+    </LinearLayout>
 
 </FrameLayout>

@@ -1,89 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background"
+    android:orientation="vertical"
     tools:context="iyp.cookbook.Register"
     android:id="@+id/SignUpmenu">
     <ImageView
+        android:layout_gravity="center"
         android:layout_width="225dp"
         android:layout_height="100dp"
-        android:src="@drawable/title"
-        android:layout_marginBottom="15dp"
-        app:layout_constraintBottom_toTopOf="@+id/regRnametxt"
-        android:layout_marginRight="75dp"
-        app:layout_constraintRight_toRightOf="parent" />
+        android:src="@drawable/title"/>
     <TextView
+        android:layout_gravity="center"
         android:id="@+id/regRnametxt"
         android:layout_width="344dp"
         android:layout_height="wrap_content"
         android:text="Real Name:"
         android:textColor="#ffffff"
         android:textSize="18sp"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="137dp" />
+        android:layout_marginTop="25dp" />
 
     <EditText
+        android:layout_gravity="center"
         android:id="@+id/regRnameedit"
         android:layout_width="300dp"
         android:layout_height="40dp"
-        android:layout_marginRight="30dp"
-        android:layout_marginTop="2dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="1dp"
         android:background="#00000000"
         android:drawableBottom="@drawable/username_input"
         android:drawableLeft="@drawable/userprofile"
-        android:ems="10"
         android:includeFontPadding="true"
         android:inputType="textPersonName"
-        android:textColor="#ffffff"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/regRnametxt" />
+        android:textColor="#ffffff" />
     <TextView
+        android:layout_gravity="center"
         android:id="@+id/regUnametxt"
         android:layout_width="344dp"
         android:layout_height="wrap_content"
         android:text="Username"
         android:textColor="#ffffff"
         android:textSize="18sp"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/regRnametxt"
-        android:layout_marginTop="42dp" />
+        android:layout_marginTop="5dp" />
 
     <EditText
+        android:layout_gravity="center"
         android:id="@+id/regUnameedit"
         android:layout_width="300dp"
         android:layout_height="40dp"
-        android:layout_marginRight="30dp"
-        android:layout_marginTop="2dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="1dp"
         android:background="#00000000"
         android:drawableBottom="@drawable/username_input"
         android:drawableLeft="@drawable/userprofile"
         android:ems="10"
         android:includeFontPadding="true"
         android:inputType="textPersonName"
-        android:textColor="#ffffff"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/regUnametxt" />
+        android:textColor="#ffffff"/>
     <TextView
+        android:layout_gravity="center"
         android:id="@+id/regPwdtxt"
         android:layout_width="344dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="42dp"
+        android:layout_marginTop="5dp"
         android:text="Password"
         android:textColor="#ffffff"
-        android:textSize="18sp"
-        app:layout_constraintTop_toBottomOf="@id/regUnametxt"
-        app:layout_constraintRight_toRightOf="parent"/>
+        android:textSize="18sp"/>
 
     <EditText
+        android:layout_gravity="center"
         android:id="@+id/regPwdedit"
         android:layout_width="300dp"
         android:layout_height="40dp"
-        android:layout_marginRight="30dp"
+        android:layout_marginRight="5dp"
         android:layout_marginTop="1dp"
         android:background="#00000000"
         android:drawableBottom="@drawable/username_input"
@@ -91,52 +84,48 @@
         android:ems="10"
         android:includeFontPadding="false"
         android:inputType="textPassword"
-        android:textColor="#ffffff"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/regPwdtxt" />
+        android:textColor="#ffffff" />
     <TextView
+        android:layout_gravity="center"
         android:id="@+id/conPwdtxt"
         android:layout_width="344dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="42dp"
+        android:layout_marginTop="5dp"
         android:text="Confirm Password"
         android:textColor="#ffffff"
-        android:textSize="18sp"
-        app:layout_constraintTop_toBottomOf="@id/regPwdtxt"
-        app:layout_constraintRight_toRightOf="parent"/>
+        android:textSize="18sp"/>
 
     <EditText
+        android:layout_gravity="center"
         android:id="@+id/conPwdedit"
         android:layout_width="300dp"
         android:layout_height="40dp"
-        android:layout_marginRight="30dp"
-        android:layout_marginTop="0dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="1dp"
         android:background="#00000000"
         android:drawableBottom="@drawable/username_input"
         android:drawableLeft="@drawable/lockwhite"
         android:ems="10"
         android:includeFontPadding="false"
         android:inputType="textPassword"
-        android:textColor="#ffffff"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/conPwdtxt" />
+        android:textColor="#ffffff" />
     <TextView
+        android:layout_gravity="center"
         android:id="@+id/regMailtxt"
         android:layout_width="344dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="42dp"
+        android:layout_marginTop="5dp"
         android:text="E-mail"
         android:textColor="#ffffff"
-        android:textSize="18sp"
-        app:layout_constraintTop_toBottomOf="@id/conPwdtxt"
-        app:layout_constraintRight_toRightOf="parent"/>
+        android:textSize="18sp"/>
 
     <EditText
+        android:layout_gravity="center"
         android:id="@+id/regMailedit"
         android:layout_width="300dp"
         android:layout_height="40dp"
-        android:layout_marginRight="30dp"
-        android:layout_marginTop="0dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="1dp"
         android:background="#00000000"
         android:drawableBottom="@drawable/username_input"
         android:drawableLeft="@drawable/emailicon"
@@ -144,22 +133,17 @@
         android:imeOptions="actionDone"
         android:includeFontPadding="false"
         android:inputType="textEmailAddress"
-        android:textColor="#ffffff"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/regMailtxt" />
+        android:textColor="#ffffff" />
 
     <Button
+        android:layout_gravity="center"
         android:id="@+id/regSignUp"
         android:layout_width="250dp"
         android:layout_height="30dp"
-        android:layout_marginEnd="50dp"
-        android:layout_marginRight="55dp"
-        android:layout_marginTop="118dp"
+        android:layout_marginTop="20dp"
         android:background="@drawable/signupbutton"
         android:onClick="reg"
         android:stateListAnimator="@animator/buttonanim"
-        android:drawablePadding="8dp"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/conPwdedit" />
+        android:drawablePadding="8dp" />
 
-</android.support.constraint.ConstraintLayout>
+</LinearLayout>

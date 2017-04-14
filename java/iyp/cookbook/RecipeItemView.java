@@ -1,10 +1,5 @@
 package iyp.cookbook;
 
-import android.content.Context;
-import android.hardware.Sensor;
-import android.hardware.SensorEvent;
-import android.hardware.SensorEventListener;
-import android.hardware.SensorManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -30,34 +25,23 @@ import iyp.cookbook.fragment.MenuCommunityFragment;
 import iyp.cookbook.fragment.MenuIngredientsFragment;
 import iyp.cookbook.fragment.MenuOverviewFragment;
 import iyp.cookbook.fragment.MenuStepsFragment;
+import iyp.cookbook.listing.MenuData;
 
 public class RecipeItemView extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
         MenuOverviewFragment.OnFragmentInteractionListener,
         MenuIngredientsFragment.OnFragmentInteractionListener,
         MenuStepsFragment.OnFragmentInteractionListener,
-        MenuCommunityFragment.OnFragmentInteractionListener,
-        SensorEventListener{
+        MenuCommunityFragment.OnFragmentInteractionListener{
 
     private Account account;
     private ViewPager viewpager;
     private SectionsPagerAdapter section;
-    //sens
-    private Sensor sense;
-    private SensorManager senseMan;
-    private long timestamp;
-    private int positem=0;
-    private void testsensor(){
-        senseMan=(SensorManager)getSystemService(Context.SENSOR_SERVICE);
-        sense=senseMan.getDefaultSensor(Sensor.TYPE_PROXIMITY);
-        timestamp= System.currentTimeMillis();
-    }
-    //sens-end
+    private MenuData menu;
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         return false;
     }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,8 +61,7 @@ public class RecipeItemView extends AppCompatActivity
         });
         //passing user detail
         this.account = (Account) getIntent().getSerializableExtra("user");
-        //test sensor
-        testsensor();
+        this.menu=(MenuData) getIntent().getSerializableExtra("menu");
         //
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -144,16 +127,6 @@ public class RecipeItemView extends AppCompatActivity
         });
     }
     @Override
-    public void onResume(){
-        super.onResume();
-        senseMan.registerListener(this, sense, SensorManager.SENSOR_DELAY_NORMAL);
-    }
-    @Override
-    public void onPause(){
-        super.onPause();
-        senseMan.unregisterListener(this);
-    }
-    @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
@@ -193,21 +166,6 @@ public class RecipeItemView extends AppCompatActivity
 
     }
 
-    @Override
-    public void onSensorChanged(SensorEvent sensorEvent) {
-        if((sensorEvent.timestamp)-timestamp<120000000) {//good enough?
-            viewpager.setCurrentItem(positem);
-            positem++;
-            if(positem>3) positem=0;
-        }
-        timestamp=sensorEvent.timestamp;
-    }
-
-    @Override
-    public void onAccuracyChanged(Sensor sensor, int i) {
-
-    }
-
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
         public SectionsPagerAdapter(FragmentManager fm) {
@@ -217,10 +175,10 @@ public class RecipeItemView extends AppCompatActivity
         @Override
         public Fragment getItem(int position) {
             switch(position){
-                case 1: return MenuIngredientsFragment.newInstance();
+                case 1: return MenuIngredientsFragment.newInstance(menu.imageID,menu.ingredients,viewpager);
                 case 2: return MenuStepsFragment.newInstance();
                 case 3: return MenuCommunityFragment.newInstance();
-                default: return MenuOverviewFragment.newInstance();//default is home screen
+                default: return MenuOverviewFragment.newInstance(menu.Title,menu.Desc,menu.imageID,menu.minute,menu.star,viewpager);//default is home screen
             }
         }
 

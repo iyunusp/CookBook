@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
@@ -19,12 +21,14 @@ public class Login extends Activity {
     private Button signup,login;
     private EditText uname,pw;
     private TextView txt,pwd,skip;
+    private Animation shake;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_login);
+        //form
         skip=(TextView)findViewById(R.id.skip);
         uname=(EditText) findViewById(R.id.Username);
         pw=(EditText) findViewById(R.id.Password);
@@ -36,9 +40,8 @@ public class Login extends Activity {
             @Override
             public void onClick(View view) {
                 //Intent intent = new Intent(getApplicationContext(), Preview_menu.class);
-                Account a=new Account("GUEST","GUEST","GUEST","GUEST@GUEST.COM","UNKNOWN","UNKNOWN");
                 Intent intent=new Intent(getApplicationContext(),MenuList.class);
-                intent.putExtra("user",a);
+                intent.putExtra("user",new Account("GUEST","GUEST","GUEST","GUEST@GUEST.COM","UNKNOWN","UNKNOWN"));
                 startActivity(intent);
             }
         });
@@ -50,6 +53,8 @@ public class Login extends Activity {
                 return false;
             }
         });
+        //animation
+        shake= AnimationUtils.loadAnimation(getApplicationContext(),R.anim.shake);
     }
     public void login(View view){
         boolean valid=true;
@@ -59,12 +64,14 @@ public class Login extends Activity {
         user[0]=userId; user[1]=passId;
         if(userId.equals("")){
             txt.setTextColor(Color.RED);
+            uname.startAnimation(shake);
             valid=false;
         }else
             txt.setTextColor(Color.WHITE);
 
          if(passId.equals("")){
-            pwd.setTextColor(Color.RED);
+             pwd.setTextColor(Color.RED);
+             pw.startAnimation(shake);
              valid=false;
         }else
             pwd.setTextColor(Color.WHITE);

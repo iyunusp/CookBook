@@ -7,6 +7,8 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,6 +20,7 @@ import iyp.cookbook.account.SignUp;
 public class Register extends Activity {
     private Button reg;
     private EditText Ename;
+    private Animation shake;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,6 +28,7 @@ public class Register extends Activity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_sign_up);
+        //form
         reg=(Button)findViewById(R.id.regSignUp);
         Ename=(EditText)findViewById(R.id.regMailedit);
         Ename.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -35,16 +39,18 @@ public class Register extends Activity {
                 return false;
             }
         });
+        //anim
+        shake= AnimationUtils.loadAnimation(getApplicationContext(),R.anim.shake);
     }
     private boolean checkUname(String uname){//FIXME waiting asynctask to finish
         if(uname.equals(""))
             return false;
         CheckUname sesi=new CheckUname(Register.this);
         sesi.execute(uname);
-        while(sesi.ret.equals(""));
-        if (sesi.ret.contains("nothing")) {
+        while(sesi.ret.equals(""));//barbar cuy
+        if (sesi.ret.contains("nothing"))
             return true;
-        }else
+        else
             return false;
     }
     private boolean confPass(String pwd, String conf){
@@ -74,12 +80,16 @@ public class Register extends Activity {
         CPassname=(EditText)findViewById(R.id.conPwdedit);
         Ename=(EditText)findViewById(R.id.regMailedit);
         Rn=Rname.getText().toString();
-        if(Rn.equals(""))
-            pass=false;
+        if(Rn.equals("")) {
+            Rname.setText("");
+            Rname.startAnimation(shake);
+            pass = false;
+        }
         Un=Uname.getText().toString();
         if(!checkUname(Un)) {
+            Uname.setText("");
             Uname.setHint("Username is not available");
-            Uname.setTextColor(Color.RED);
+            Uname.startAnimation(shake);
             pass=false;
         }else{
             Uname.setHint("");
@@ -88,23 +98,22 @@ public class Register extends Activity {
         Pn=Passname.getText().toString();
         Cn=CPassname.getText().toString();
         if(!confPass(Pn,Cn)) {
+            CPassname.setText("");
             CPassname.setHint("Password didn't match");
-            Passname.setTextColor(Color.RED);
-            CPassname.setTextColor(Color.RED);
+            Passname.startAnimation(shake);
+            CPassname.startAnimation(shake);
             pass=false;
         }else{
             CPassname.setHint("");
-            Passname.setTextColor(Color.WHITE);
-            CPassname.setTextColor(Color.WHITE);
         }
         En=Ename.getText().toString();
         if(!checkEmail(En)){
+            Ename.setText("");
             Ename.setHint("Wrong Format");
-            Ename.setTextColor(Color.RED);
+            Ename.startAnimation(shake);
             pass=false;
         }else{
             Ename.setHint("");
-            Ename.setTextColor(Color.WHITE);
         }
         if(pass){
             SignUp sesi= new SignUp(Register.this);

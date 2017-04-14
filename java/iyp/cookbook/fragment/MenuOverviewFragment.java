@@ -4,9 +4,13 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import iyp.cookbook.R;
 
@@ -20,12 +24,24 @@ import iyp.cookbook.R;
 public class MenuOverviewFragment extends Fragment{
 
     private OnFragmentInteractionListener mListener;
-
+    private int imageid, minute;
+    private float star=0;
+    private String title,desc;
+    private ViewPager viewpager;
     public MenuOverviewFragment() {
         // Required empty public constructor
     }
-    public static MenuOverviewFragment newInstance() {
+    public void setAll(String title,String desc, int imageid, int minute, float star,ViewPager viewpager){
+        this.desc = desc;
+        this.imageid = imageid;
+        this.minute = minute;
+        this.star = star;
+        this.title = title;
+        this.viewpager=viewpager;
+    }
+    public static MenuOverviewFragment newInstance(String title,String desc, int imageid, int minute, float star,ViewPager viewpager) {
         MenuOverviewFragment fragment = new MenuOverviewFragment();
+        fragment.setAll( title, desc,  imageid,  minute,  star,viewpager);
         return fragment;
     }
 
@@ -33,7 +49,32 @@ public class MenuOverviewFragment extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_menu_overview, container, false);
+        View v=inflater.inflate(R.layout.fragment_menu_overview, container, false);
+        ImageView image=(ImageView)v.findViewById(R.id.menuImageOverview);
+        image.setImageResource(imageid);
+        TextView tit=(TextView)v.findViewById(R.id.menuTitleOverview),
+                des=(TextView)v.findViewById(R.id.menuTitleDesc),
+                min=(TextView)v.findViewById(R.id.menuTitleMinute),
+                str=(TextView)v.findViewById(R.id.menuTitleStar);
+        ImageButton cook=(ImageButton)v.findViewById(R.id.overviewOrder),
+                start=(ImageButton)v.findViewById(R.id.overviewStart);
+        start.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                viewpager.setCurrentItem(1);
+            }
+        });
+        cook.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //TODO make order activity
+            }
+        });
+        tit.setText(title);
+        min.setText("Estimated Time : "+minute+" Min");
+        str.setText("Rating : "+star+" *");
+        des.setText(desc);
+        return v;
     }
 
     // TODO: Rename method, update argument and hook method into UI event

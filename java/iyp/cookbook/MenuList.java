@@ -12,7 +12,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -26,7 +25,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import iyp.cookbook.account.Account;
-import iyp.cookbook.listing.Data;
+import iyp.cookbook.listing.IngredientData;
+import iyp.cookbook.listing.MenuData;
 
 public class MenuList extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -59,10 +59,14 @@ public class MenuList extends AppCompatActivity
             }
         });
         //TODO database reader
-        List<Data> data = new ArrayList<>();
-        data.add(new Data( "Menu 1", R.drawable.belakangprofilepicture,0));
-        data.add(new Data( "Menu 2", R.drawable.belakangprofilepicture,0));
-        data.add(new Data( "Menu 3", R.drawable.belakangprofilepicture,0));
+        List<MenuData> data = new ArrayList<>();
+        List<IngredientData> ingredients= new ArrayList<>();
+        ingredients.add(new IngredientData("tomat",R.drawable.beef_icon,5465));
+        ingredients.add(new IngredientData("wortel",R.drawable.lowcarbs,5465));
+        ingredients.add(new IngredientData("jagung",R.drawable.soups,5465));
+        data.add(new MenuData( "Menu 1", "ini itu adalah menu 1 yang paling enak",R.drawable.belakangprofilepicture,0,ingredients,60,(float)4.5));
+        data.add(new MenuData( "Menu 2", "ini itu adalah menu 2 yang paling biasa aja", R.drawable.belakangprofilepicture,0,ingredients,60,(float)3));
+        data.add(new MenuData( "Menu 3", "ini itu adalah menu 3 yang paling ga enak", R.drawable.belakangprofilepicture,0,ingredients,60,(float)2.5));
         /*data.add(new Data("", "Image 2"));
         data.add(new Data( "", "Image 3"));
         data.add(new Data( "", "Image 1"));
@@ -78,8 +82,8 @@ public class MenuList extends AppCompatActivity
         RecyclerView myList1 = (RecyclerView) findViewById(R.id.newview);
         myList.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false));
         myList1.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false));
-        myList.setAdapter(new HorizontalAdapter(data,getApplicationContext(),account));
-        myList1.setAdapter(new HorizontalAdapter(data,getApplicationContext(),account));
+        myList.setAdapter(new MenuAdapter(data,getApplicationContext(),account));
+        myList1.setAdapter(new MenuAdapter(data,getApplicationContext(),account));
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -104,7 +108,6 @@ public class MenuList extends AppCompatActivity
                     banners.smoothScrollTo(0, 0);
                     i=0;
                 }
-                Log.e("slide to",""+i);
                 banners.smoothScrollTo((metric.widthPixels*i),0);//8 == margin
                 i++;
                 handler.postDelayed(run,5000);
