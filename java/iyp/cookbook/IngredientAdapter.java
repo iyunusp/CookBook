@@ -18,7 +18,6 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.My
 
     List<IngredientData> horizontalList = Collections.emptyList();
     Context context;
-
     public IngredientAdapter(List<IngredientData> horizontalList, Context context) {
         this.horizontalList = horizontalList;
         this.context = context;

@@ -1,5 +1,6 @@
 package iyp.cookbook.fragment;
 
+import android.app.Activity;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
@@ -9,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -68,7 +70,7 @@ public class MenuCommunityFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View v=inflater.inflate(R.layout.fragment_menu_community, container, false);
+        final View v=inflater.inflate(R.layout.fragment_menu_community, container, false);
         TextView user=(TextView)v.findViewById(R.id.userCommentName);
         user.setText(Username);
         ImageView image=(ImageView)v.findViewById(R.id.userCommentImage);
@@ -99,17 +101,25 @@ public class MenuCommunityFragment extends Fragment {
                         return;
                     }
                 }
-                if(Username.equals("GUEST")){
-                    Toast.makeText(getActivity().getApplicationContext(),"You must Login First",Toast.LENGTH_SHORT).show();
-                }else{
+                if(!Username.equals("GUEST") && commentText.getText().toString().length()>1){
                     commen.add(new CommentData(Username,ImageId,commentText.getText().toString(),rate));
                     adapter.notifyDataSetChanged();
                     communicate cm=(communicate) getActivity();
                     cm.sendData(commen);
+                }else if(commentText.getText().toString().length()>1) {
+                    Toast.makeText(getActivity().getApplicationContext(),"Comment must be more than 2 character",Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(getActivity().getApplicationContext(),"You must Login First",Toast.LENGTH_SHORT).show();
                 }
+                hideKeyboard(view);
             }
         });
         return v;
+    }
+
+    public void hideKeyboard(View view) {
+        InputMethodManager inputMethodManager =(InputMethodManager)getActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
     // TODO: Rename method, update argument and hook method into UI event

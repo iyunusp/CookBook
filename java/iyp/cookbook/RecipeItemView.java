@@ -1,5 +1,6 @@
 package iyp.cookbook;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -165,11 +166,13 @@ public class RecipeItemView extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
+        }else {
+            Intent intent = new Intent();
+            intent.putExtra("update", menu);
+            setResult(RESULT_OK, intent);
+            finish();
         }
     }
-
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -199,7 +202,6 @@ public class RecipeItemView extends AppCompatActivity
     public void onFragmentInteraction(Uri uri) {
 
     }
-
     @Override
     public void sendData(List<CommentData> comment) {
         //TODO

@@ -1,5 +1,6 @@
 package iyp.cookbook;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
@@ -55,8 +56,8 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MyViewHolder> 
                 Intent intent=new Intent(context,RecipeItemView.class);
                 intent.putExtra("menu",horizontalList.get(position));
                 intent.putExtra("user",account);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                context.startActivity(intent);
+                MenuList.pos=position;
+                ((Activity)context).startActivityForResult(intent,2);
             }
         });
 

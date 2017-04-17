@@ -1,6 +1,7 @@
 package iyp.cookbook;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.NavigationView;
@@ -31,11 +32,14 @@ import iyp.cookbook.listing.MenuData;
 
 public class MenuList extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-    Account account;
+    public static int pos=0;
+    private Account account;
     private ImageView banner[]= new ImageView[5];
     private HorizontalScrollView banners;
     private Handler handler= new Handler();
     private Runnable run;
+    private List<MenuData> data;
+    private MenuAdapter recmen,newmen;
     private boolean status=false;
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
@@ -69,17 +73,17 @@ public class MenuList extends AppCompatActivity
         com1.add(new CommentData("joko",R.mipmap.icon,"bagus",4));
         com1.add(new CommentData("anwar",R.mipmap.icon,"mantap",5));
         com1.add(new CommentData("prabowo",R.mipmap.icon,"gokil",3));
-        List<MenuData> data = new ArrayList<>();
+        data= new ArrayList<>();
         data.add(new MenuData( "Menu 1", "ini itu adalah menu 1 yang paling enak",R.drawable.belakangprofilepicture,0,ingredients,60,com1));
         List<CommentData> com2= new ArrayList<>();
         ingredients.add(new IngredientData("onta",R.drawable.soups,222));
         com2.add(new CommentData("prabowo",R.mipmap.icon,"gokil",4));
         com2.add(new CommentData("prabowo",R.mipmap.icon,"gokil",(float)2.5));
-        data.add(new MenuData( "Menu 2", "ini itu adalah menu 2 yang paling biasa aja", R.drawable.belakangprofilepicture,0,ingredients,60,com2));
+        data.add(new MenuData( "Menu 2", "ini itu adalah menu 2 yang paling biasa aja", R.drawable.belakangprofilepicture,1,ingredients,60,com2));
         List<CommentData> com3= new ArrayList<>();
         ingredients.add(new IngredientData("ssss",R.drawable.soups,3343));
         com3.add(new CommentData("prabowo",R.mipmap.icon,"gokil",(float)0.5));
-        data.add(new MenuData( "Menu 3", "ini itu adalah menu 3 yang paling ga enak", R.drawable.belakangprofilepicture,0,ingredients,60,com3));
+        data.add(new MenuData( "Menu 3", "ini itu adalah menu 3 yang paling ga enak", R.drawable.belakangprofilepicture,2,ingredients,60,com3));
         /*data.add(new Data("", "Image 2"));
         data.add(new Data( "", "Image 3"));
         data.add(new Data( "", "Image 1"));
@@ -95,8 +99,10 @@ public class MenuList extends AppCompatActivity
         RecyclerView myList1 = (RecyclerView) findViewById(R.id.newview);
         myList.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false));
         myList1.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false));
-        myList.setAdapter(new MenuAdapter(data,getApplicationContext(),account));
-        myList1.setAdapter(new MenuAdapter(data,getApplicationContext(),account));
+        recmen=new MenuAdapter(data,this,account);
+        newmen=new MenuAdapter(data,this,account);
+        myList.setAdapter(recmen);
+        myList1.setAdapter(newmen);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -151,6 +157,18 @@ public class MenuList extends AppCompatActivity
                 Toast.makeText(getApplicationContext(),"You're Nice", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data){
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode==2){
+            if(resultCode==RESULT_OK) {
+                MenuData update = (MenuData) data.getSerializableExtra("update");
+                this.data.set(pos, update);
+                recmen.notifyDataSetChanged();
+                newmen.notifyDataSetChanged();
+            }
+        }
     }
     @Override
     public void onPause(){
