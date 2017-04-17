@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import java.util.Collections;
 import java.util.List;
 
@@ -16,10 +17,9 @@ import iyp.cookbook.listing.MenuData;
 
 public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MyViewHolder> {
 
-
-    List<MenuData> horizontalList = Collections.emptyList();
-    Context context;
-    Account account;
+    private List<MenuData> horizontalList = Collections.emptyList();
+    private Context context;
+    private Account account;
 
     public MenuAdapter(List<MenuData> horizontalList, Context context, Account account) {
         this.horizontalList = horizontalList;
@@ -57,7 +57,6 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MyViewHolder> 
                 intent.putExtra("user",account);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
-
             }
         });
 

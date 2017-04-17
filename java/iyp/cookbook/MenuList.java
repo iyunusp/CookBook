@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import iyp.cookbook.account.Account;
+import iyp.cookbook.listing.CommentData;
 import iyp.cookbook.listing.IngredientData;
 import iyp.cookbook.listing.MenuData;
 
@@ -58,15 +59,27 @@ public class MenuList extends AppCompatActivity
                 Toast.makeText(getApplicationContext(),"your chart are empty", Toast.LENGTH_SHORT).show();
             }
         });
-        //TODO database reader
-        List<MenuData> data = new ArrayList<>();
+        //TODO database reader ASAP
+
         List<IngredientData> ingredients= new ArrayList<>();
         ingredients.add(new IngredientData("tomat",R.drawable.beef_icon,5465));
         ingredients.add(new IngredientData("wortel",R.drawable.lowcarbs,5465));
         ingredients.add(new IngredientData("jagung",R.drawable.soups,5465));
-        data.add(new MenuData( "Menu 1", "ini itu adalah menu 1 yang paling enak",R.drawable.belakangprofilepicture,0,ingredients,60,(float)4.5));
-        data.add(new MenuData( "Menu 2", "ini itu adalah menu 2 yang paling biasa aja", R.drawable.belakangprofilepicture,0,ingredients,60,(float)3));
-        data.add(new MenuData( "Menu 3", "ini itu adalah menu 3 yang paling ga enak", R.drawable.belakangprofilepicture,0,ingredients,60,(float)2.5));
+        List<CommentData> com1= new ArrayList<>();
+        com1.add(new CommentData("joko",R.mipmap.icon,"bagus",4));
+        com1.add(new CommentData("anwar",R.mipmap.icon,"mantap",5));
+        com1.add(new CommentData("prabowo",R.mipmap.icon,"gokil",3));
+        List<MenuData> data = new ArrayList<>();
+        data.add(new MenuData( "Menu 1", "ini itu adalah menu 1 yang paling enak",R.drawable.belakangprofilepicture,0,ingredients,60,com1));
+        List<CommentData> com2= new ArrayList<>();
+        ingredients.add(new IngredientData("onta",R.drawable.soups,222));
+        com2.add(new CommentData("prabowo",R.mipmap.icon,"gokil",4));
+        com2.add(new CommentData("prabowo",R.mipmap.icon,"gokil",(float)2.5));
+        data.add(new MenuData( "Menu 2", "ini itu adalah menu 2 yang paling biasa aja", R.drawable.belakangprofilepicture,0,ingredients,60,com2));
+        List<CommentData> com3= new ArrayList<>();
+        ingredients.add(new IngredientData("ssss",R.drawable.soups,3343));
+        com3.add(new CommentData("prabowo",R.mipmap.icon,"gokil",(float)0.5));
+        data.add(new MenuData( "Menu 3", "ini itu adalah menu 3 yang paling ga enak", R.drawable.belakangprofilepicture,0,ingredients,60,com3));
         /*data.add(new Data("", "Image 2"));
         data.add(new Data( "", "Image 3"));
         data.add(new Data( "", "Image 1"));

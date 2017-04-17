@@ -20,11 +20,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.List;
+
 import iyp.cookbook.account.Account;
 import iyp.cookbook.fragment.MenuCommunityFragment;
 import iyp.cookbook.fragment.MenuIngredientsFragment;
 import iyp.cookbook.fragment.MenuOverviewFragment;
 import iyp.cookbook.fragment.MenuStepsFragment;
+import iyp.cookbook.fragment.communicate;
+import iyp.cookbook.listing.CommentData;
 import iyp.cookbook.listing.MenuData;
 
 public class RecipeItemView extends AppCompatActivity
@@ -32,13 +36,14 @@ public class RecipeItemView extends AppCompatActivity
         MenuOverviewFragment.OnFragmentInteractionListener,
         MenuIngredientsFragment.OnFragmentInteractionListener,
         MenuStepsFragment.OnFragmentInteractionListener,
-        MenuCommunityFragment.OnFragmentInteractionListener{
+        MenuCommunityFragment.OnFragmentInteractionListener,communicate{
 
     private Account account;
     private ViewPager viewpager;
     private SectionsPagerAdapter section;
     private MenuData menu;
     private TextView overview,ingredients,steps,community;
+    private MenuOverviewFragment home;
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         return false;
@@ -195,6 +200,14 @@ public class RecipeItemView extends AppCompatActivity
 
     }
 
+    @Override
+    public void sendData(List<CommentData> comment) {
+        //TODO
+        this.menu.comments=comment;
+        menu.calcStar();
+        home.updateStar(menu.star);
+    }
+
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
         public SectionsPagerAdapter(FragmentManager fm) {
             super(fm);
@@ -205,10 +218,11 @@ public class RecipeItemView extends AppCompatActivity
             switch(position){
                 case 1:return MenuIngredientsFragment.newInstance(menu.imageID,menu.ingredients,viewpager);
                 case 2:return MenuStepsFragment.newInstance();
-                case 3:return MenuCommunityFragment.newInstance();
+                case 3:return MenuCommunityFragment.newInstance(account.getUname(),account.getImageID(),menu.comments);
                 default:{
                     overview.setBackgroundColor(getResources().getColor(R.color.colorAccent));
-                    return MenuOverviewFragment.newInstance(menu.Title,menu.Desc,menu.imageID,menu.minute,menu.star,viewpager);//default is home screen
+                    home=MenuOverviewFragment.newInstance(menu.Title,menu.Desc,menu.imageID,menu.minute,menu.star,viewpager);
+                    return home;//default is home screen
                 }
             }
         }

@@ -5,12 +5,77 @@
     tools:context="iyp.cookbook.fragment.MenuCommunityFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="Community"
-        android:textColor="#ffffff"
-        android:background="#FF0000"/>
+        android:weightSum="5"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:orientation="horizontal"
+            android:layout_weight="1.2"
+            android:weightSum="4">
+            <ImageView
+                android:id="@+id/userCommentImage"
+                android:layout_width="0dp"
+                android:layout_height="45dp"
+                android:layout_weight="1"/>
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2.8"
+                android:orientation="vertical"
+                android:weightSum="10">
+                <TextView
+                    android:id="@+id/userCommentName"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="2"
+                    android:textSize="18dp"
+                    android:textStyle="bold"/>
+
+                <EditText
+                    android:id="@+id/userCommentText"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="5"
+                    android:hint="Write Your Comment here"
+                    android:textCursorDrawable="@null"
+                    android:background="@drawable/shadoweffectcomment"
+                    android:maxLines="5" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="2.5"
+                    android:orientation="horizontal"
+                    android:weightSum="6">
+                    <TextView
+                        android:id="@+id/userCommentStar"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="3"
+                        android:text="0.0 Star"/>
+                    <Button
+                        android:id="@+id/userCommentComment"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:text="Comment"
+                        android:textSize="10dp"
+                        android:layout_marginLeft="50dp"
+                        android:layout_gravity="right"
+                        android:layout_weight="2.5"/>
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/commentList"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="3.5"></android.support.v7.widget.RecyclerView>
+
+    </LinearLayout>
 
 </FrameLayout>

@@ -28,6 +28,7 @@ public class MenuOverviewFragment extends Fragment{
     private float star=0;
     private String title,desc;
     private ViewPager viewpager;
+    private TextView str;
     public MenuOverviewFragment() {
         // Required empty public constructor
     }
@@ -54,8 +55,8 @@ public class MenuOverviewFragment extends Fragment{
         image.setImageResource(imageid);
         TextView tit=(TextView)v.findViewById(R.id.menuTitleOverview),
                 des=(TextView)v.findViewById(R.id.menuTitleDesc),
-                min=(TextView)v.findViewById(R.id.menuTitleMinute),
-                str=(TextView)v.findViewById(R.id.menuTitleStar);
+                min=(TextView)v.findViewById(R.id.menuTitleMinute);
+        str=(TextView)v.findViewById(R.id.menuTitleStar);
         ImageButton cook=(ImageButton)v.findViewById(R.id.overviewOrder),
                 start=(ImageButton)v.findViewById(R.id.overviewStart);
         start.setOnClickListener(new View.OnClickListener() {
@@ -71,12 +72,15 @@ public class MenuOverviewFragment extends Fragment{
             }
         });
         tit.setText(title);
-        min.setText("Estimated Time : "+minute+" Min");
-        str.setText("Rating : "+star+" *");
+        updateStar(star);
+        min.setText("Estimated : "+minute+" Min");
         des.setText(desc);
         return v;
     }
-
+    public void updateStar(float star){
+        this.star=star;
+        str.setText(String.format("Rating : %.1f *",star));
+    }
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {

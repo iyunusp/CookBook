@@ -4,11 +4,22 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import java.util.List;
+
+import iyp.cookbook.CommentAdapter;
 import iyp.cookbook.R;
+import iyp.cookbook.listing.CommentData;
 
 
 /**
@@ -20,56 +31,85 @@ import iyp.cookbook.R;
  * create an instance of this fragment.
  */
 public class MenuCommunityFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
     private OnFragmentInteractionListener mListener;
-
+    private List<CommentData> commen;
+    private int ImageId;
+    private float rate=(float)0.0;
+    private String Username;
+    private Button commentButton;
+    private EditText commentText;
+    private RecyclerView.Adapter adapter;
+    public void setCommen(List<CommentData> commen) {
+        this.commen = commen;
+    }
+    public void setImageId(int imageId) {
+        ImageId = imageId;
+    }
     public MenuCommunityFragment() {
         // Required empty public constructor
     }
-    public static MenuCommunityFragment newInstance() {
-        MenuCommunityFragment fragment = new MenuCommunityFragment();
-        return fragment;
+    public void setUsername(String username) {
+        Username = username;
     }
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment MenuCommunityFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static MenuCommunityFragment newInstance(String param1, String param2) {
+    public static MenuCommunityFragment newInstance(String Username,int ImageId, List<CommentData> comment) {
         MenuCommunityFragment fragment = new MenuCommunityFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
+        fragment.setImageId(ImageId);
+        fragment.setCommen(comment);
+        fragment.setUsername(Username);
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_menu_community, container, false);
+        View v=inflater.inflate(R.layout.fragment_menu_community, container, false);
+        TextView user=(TextView)v.findViewById(R.id.userCommentName);
+        user.setText(Username);
+        ImageView image=(ImageView)v.findViewById(R.id.userCommentImage);
+        image.setImageResource(ImageId);
+        commentText=(EditText)v.findViewById(R.id.userCommentText);
+        RecyclerView comlist=(RecyclerView)v.findViewById(R.id.commentList);
+        comlist.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false));
+        adapter=new CommentAdapter(commen,getContext());
+        comlist.setAdapter(adapter);
+        final TextView rating=(TextView)v.findViewById(R.id.userCommentStar);
+        //testing
+        rating.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                rate+=0.5;
+                if(rate>5.0)
+                    rate=(float)0.0;
+                rating.setText(String.format("%.1f Star",rate));
+            }
+        });
+        commentButton=(Button)v.findViewById(R.id.userCommentComment);
+        commentButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                for(CommentData com:commen){
+                    if(com.username.equals(Username)){
+                        Toast.makeText(getActivity().getApplicationContext(),"You've Comment this Recipe",Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                }
+                if(Username.equals("GUEST")){
+                    Toast.makeText(getActivity().getApplicationContext(),"You must Login First",Toast.LENGTH_SHORT).show();
+                }else{
+                    commen.add(new CommentData(Username,ImageId,commentText.getText().toString(),rate));
+                    adapter.notifyDataSetChanged();
+                    communicate cm=(communicate) getActivity();
+                    cm.sendData(commen);
+                }
+            }
+        });
+        return v;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
