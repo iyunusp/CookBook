@@ -4,12 +4,13 @@
     android:layout_height="match_parent"
     tools:context="iyp.cookbook.fragment.MenuStepsFragment">
 
-    <!-- TODO: Update blank fragment layout -->
+    <!-- TODO: Update blank fragment customrating -->
     <TextView
+        android:id="@+id/stepLocker"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:text="Steps"
+        android:text="Step is Locked"
         android:background="#AAAAAA"
         android:textColor="#FFFFFF"/>
 

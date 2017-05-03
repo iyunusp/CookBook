@@ -45,6 +45,7 @@ public class RecipeItemView extends AppCompatActivity
     private MenuData menu;
     private TextView overview,ingredients,steps,community;
     private MenuOverviewFragment home;
+    private MenuStepsFragment step;
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         return false;
@@ -210,6 +211,11 @@ public class RecipeItemView extends AppCompatActivity
         home.updateStar(menu.star);
     }
 
+    @Override
+    public void enableStep() {
+        step.enableStep();
+    }
+
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
         public SectionsPagerAdapter(FragmentManager fm) {
             super(fm);
@@ -219,7 +225,7 @@ public class RecipeItemView extends AppCompatActivity
         public Fragment getItem(int position) {
             switch(position){
                 case 1:return MenuIngredientsFragment.newInstance(menu.imageID,menu.ingredients,viewpager);
-                case 2:return MenuStepsFragment.newInstance();
+                case 2:return step=MenuStepsFragment.newInstance();
                 case 3:return MenuCommunityFragment.newInstance(account.getUname(),account.getImageID(),menu.comments);
                 default:{
                     overview.setBackgroundColor(getResources().getColor(R.color.colorAccent));

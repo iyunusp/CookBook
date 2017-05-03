@@ -10,4 +10,5 @@ import iyp.cookbook.listing.CommentData;
 
 public interface communicate {
     public void sendData(List<CommentData> comment);
+    public void enableStep();
 }

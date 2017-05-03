@@ -49,7 +49,7 @@ public class MenuOverviewFragment extends Fragment{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+        // Inflate the customrating for this fragment
         View v=inflater.inflate(R.layout.fragment_menu_overview, container, false);
         ImageView image=(ImageView)v.findViewById(R.id.menuImageOverview);
         image.setImageResource(imageid);

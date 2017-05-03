@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     tools:context="iyp.cookbook.fragment.MenuCommunityFragment">
 
-    <!-- TODO: Update blank fragment layout -->
+    <!-- TODO: Update blank fragment customrating -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -47,24 +47,34 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_weight="2.5"
+                    android:layout_weight="3"
                     android:orientation="horizontal"
                     android:weightSum="6">
-                    <TextView
+
+                    <RatingBar
+                        android:layout_marginTop="7dp"
                         android:id="@+id/userCommentStar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        style="?android:attr/ratingBarStyleSmall"
+                        android:progressDrawable="@drawable/customrating"
+                        android:numStars="5"
+                        android:isIndicator="false"
+                        android:rating="0"
+                        android:stepSize="0.5" />
+                    <View
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="3"
-                        android:text="0.0 Star"/>
+                        />
                     <Button
                         android:id="@+id/userCommentComment"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:text="Comment"
                         android:textSize="10dp"
-                        android:layout_marginLeft="50dp"
                         android:layout_gravity="right"
-                        android:layout_weight="2.5"/>
+                        android:layout_weight="3"/>
                 </LinearLayout>
 
             </LinearLayout>

@@ -84,6 +84,8 @@ public class MenuIngredientsFragment extends Fragment {
                         return;
                     }
                 }
+                communicate com=(communicate)getActivity();
+                com.enableStep();
                 viewpager.setCurrentItem(2);
             }
         });

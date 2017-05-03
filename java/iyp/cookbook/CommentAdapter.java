@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import java.util.Collections;
@@ -29,13 +30,14 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.MyViewHo
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         ImageView imageicon;
-        TextView comment,username,star;
+        TextView comment,username;
+        RatingBar star;
         public MyViewHolder(View view) {
             super(view);
             username=(TextView) view.findViewById(R.id.commentUsername);
             imageicon=(ImageView) view.findViewById(R.id.commentImage);
             comment=(TextView) view.findViewById(R.id.commentText);
-            star=(TextView) view.findViewById(R.id.commentStar);
+            star=(RatingBar) view.findViewById(R.id.commentStar);
         }
     }
     @Override
@@ -50,7 +52,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.MyViewHo
         holder.username.setText(horizontalList.get(position).username);
         holder.comment.setText(horizontalList.get(position).comment);
         holder.imageicon.setImageResource(horizontalList.get(position).imageID);
-        holder.star.setText(horizontalList.get(position).star+" Star");
+        holder.star.setRating(horizontalList.get(position).star);
         if(position >lastPos) {
             Animation animation = AnimationUtils.loadAnimation(context,
                     R.anim.recycleanim);

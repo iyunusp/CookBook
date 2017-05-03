@@ -14,6 +14,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -69,7 +70,7 @@ public class MenuCommunityFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+        // Inflate the customrating for this fragment
         final View v=inflater.inflate(R.layout.fragment_menu_community, container, false);
         TextView user=(TextView)v.findViewById(R.id.userCommentName);
         user.setText(Username);
@@ -80,17 +81,7 @@ public class MenuCommunityFragment extends Fragment {
         comlist.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false));
         adapter=new CommentAdapter(commen,getContext());
         comlist.setAdapter(adapter);
-        final TextView rating=(TextView)v.findViewById(R.id.userCommentStar);
-        //testing
-        rating.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                rate+=0.5;
-                if(rate>5.0)
-                    rate=(float)0.0;
-                rating.setText(String.format("%.1f Star",rate));
-            }
-        });
+        final RatingBar rating=(RatingBar)v.findViewById(R.id.userCommentStar);
         commentButton=(Button)v.findViewById(R.id.userCommentComment);
         commentButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -101,17 +92,17 @@ public class MenuCommunityFragment extends Fragment {
                         return;
                     }
                 }
+                hideKeyboard(view);
                 if(!Username.equals("GUEST") && commentText.getText().toString().length()>1){
-                    commen.add(new CommentData(Username,ImageId,commentText.getText().toString(),rate));
+                    commen.add(new CommentData(Username,ImageId,commentText.getText().toString(),rating.getRating()));
                     adapter.notifyDataSetChanged();
                     communicate cm=(communicate) getActivity();
                     cm.sendData(commen);
-                }else if(commentText.getText().toString().length()>1) {
-                    Toast.makeText(getActivity().getApplicationContext(),"Comment must be more than 2 character",Toast.LENGTH_SHORT).show();
+                }else if(commentText.getText().toString().length()<=1) {
+                    Toast.makeText(getActivity().getApplicationContext(),"Comment must be more than 2 character"+rating.getRating(),Toast.LENGTH_SHORT).show();
                 }else{
                     Toast.makeText(getActivity().getApplicationContext(),"You must Login First",Toast.LENGTH_SHORT).show();
                 }
-                hideKeyboard(view);
             }
         });
         return v;
