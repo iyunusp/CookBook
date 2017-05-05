@@ -48,7 +48,7 @@ public class SignIn extends AsyncTask {
         uname=(String) objects[0];
         pass=(String) objects[1];
         try{
-            String link="http://iyunusp.gear.host/login.php?username="+uname+"&password="+pass;
+            String link="http://iyunusp.gear.host/loginApp.php?username="+uname+"&password="+pass;
             URL url=new URL(link);
             HttpClient client=new DefaultHttpClient();
             HttpGet request=new HttpGet();

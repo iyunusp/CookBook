@@ -99,7 +99,7 @@ public class MenuCommunityFragment extends Fragment {
                     communicate cm=(communicate) getActivity();
                     cm.sendData(commen);
                 }else if(commentText.getText().toString().length()<=1) {
-                    Toast.makeText(getActivity().getApplicationContext(),"Comment must be more than 2 character"+rating.getRating(),Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity().getApplicationContext(),"Comment must be more than 2 character",Toast.LENGTH_SHORT).show();
                 }else{
                     Toast.makeText(getActivity().getApplicationContext(),"You must Login First",Toast.LENGTH_SHORT).show();
                 }
