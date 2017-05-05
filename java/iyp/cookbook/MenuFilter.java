@@ -1,9 +1,7 @@
 package iyp.cookbook;
 
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -12,12 +10,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,17 +26,17 @@ import iyp.cookbook.listing.CommentData;
 import iyp.cookbook.listing.IngredientData;
 import iyp.cookbook.listing.MenuData;
 
-public class MenuList extends AppCompatActivity
+/**
+ * Created by yunus on 05/05/2017.
+ */
+
+public class MenuFilter extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     public static int pos=0;
     private Account account;
-    private ImageView banner[]= new ImageView[5];
-    private HorizontalScrollView banners;
-    private Handler handler= new Handler();
-    private Runnable run;
-    private List<MenuData> data;
-    private MenuAdapter recmen,newmen;
-    private boolean status=false;
+    private List<MenuData> data,filtered;
+    private MenuAdapterBig recmen;
+    private RecyclerView myList;
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         return false;
@@ -55,7 +51,7 @@ public class MenuList extends AppCompatActivity
 
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.activity_menu_list);
+        setContentView(R.layout.activity_menu_filter);
         menuchart=(ImageView)findViewById(R.id.menuChart);
         menuchart.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,6 +59,7 @@ public class MenuList extends AppCompatActivity
                 Toast.makeText(getApplicationContext(),"your chart are empty", Toast.LENGTH_SHORT).show();
             }
         });
+        this.account=(Account) getIntent().getSerializableExtra("user");
         //TODO database reader ASAP
 
         List<IngredientData> ingredients= new ArrayList<>();
@@ -74,6 +71,10 @@ public class MenuList extends AppCompatActivity
         com1.add(new CommentData("anwar",R.mipmap.icon,"mantap",5));
         com1.add(new CommentData("prabowo",R.mipmap.icon,"gokil",3));
         data= new ArrayList<>();
+        //sample filter
+        filtered= new ArrayList<>();
+        filtered.add(new MenuData( "Menu 5", "ini itu adalah menu 5 yang paling enak",R.drawable.belakangprofilepicture,0,ingredients,60,com1));
+
         data.add(new MenuData( "Menu 1", "ini itu adalah menu 1 yang paling enak",R.drawable.belakangprofilepicture,0,ingredients,60,com1));
         List<CommentData> com2= new ArrayList<>();
         ingredients.add(new IngredientData("onta",R.drawable.soups,222));
@@ -84,55 +85,14 @@ public class MenuList extends AppCompatActivity
         ingredients.add(new IngredientData("ssss",R.drawable.soups,3343));
         com3.add(new CommentData("prabowo",R.mipmap.icon,"gokil",(float)0.5));
         data.add(new MenuData( "Menu 3", "ini itu adalah menu 3 yang paling ga enak", R.drawable.belakangprofilepicture,2,ingredients,60,com3));
-        /*data.add(new Data("", "Image 2"));
-        data.add(new Data( "", "Image 3"));
-        data.add(new Data( "", "Image 1"));
-        data.add(new Data( "", "Image 2"));
-        data.add(new Data( "", "Image 3"));
-        data.add(new Data( "", "Image 1"));
-        data.add(new Data( "", "Image 2"));
-        data.add(new Data("", "Image 3"));*/
-        this.account=(Account) getIntent().getSerializableExtra("user");
-        Toast.makeText(getApplicationContext(), "Welcome "+account.getRealname(), Toast.LENGTH_LONG).show();
 
-        RecyclerView myList = (RecyclerView) findViewById(R.id.recview);
-        RecyclerView myList1 = (RecyclerView) findViewById(R.id.newview);
-        myList.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false));
-        myList1.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false));
-        recmen=new MenuAdapter(data,this,account);
-        newmen=new MenuAdapter(data,this,account);
+        myList = (RecyclerView) findViewById(R.id.menuFilter);
+        myList.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
+        recmen=new MenuAdapterBig(data,this,account);
         myList.setAdapter(recmen);
-        myList1.setAdapter(newmen);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        //banners setting
-        banners=(HorizontalScrollView)findViewById(R.id.banner);
-        banner[0]=(ImageView)findViewById(R.id.iconBanner1);
-        banner[1]=(ImageView)findViewById(R.id.iconBanner2);
-        banner[2]=(ImageView)findViewById(R.id.iconBanner3);
-        banner[3]=(ImageView)findViewById(R.id.iconBanner4);
-        banner[4]=(ImageView)findViewById(R.id.iconBanner5);
-        final DisplayMetrics metric=new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(metric);
-        for(ImageView ban:banner){
-            ban.getLayoutParams().width=metric.widthPixels-(8*(int)metric.density);
-        }
-        run= new Runnable() {
-            int i=0;
-            @Override
-            public void run() {
-                status=true;
-                if(i>4) {//reach max
-                    banners.smoothScrollTo(0, 0);
-                    i=0;
-                }
-                banners.smoothScrollTo((metric.widthPixels*i),0);//8 == margin
-                i++;
-                handler.postDelayed(run,5000);
-            }
-        };
-
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -157,6 +117,19 @@ public class MenuList extends AppCompatActivity
                 Toast.makeText(getApplicationContext(),"You're Nice", Toast.LENGTH_SHORT).show();
             }
         });
+        //filtering
+        if(!getIntent().getStringExtra("filter").equals("all")) {
+            changeFillter(getIntent().getStringExtra("filter"));
+        }
+    }
+    private void changeFillter(String filter){
+        if(filter.equals("all")){
+            recmen= new MenuAdapterBig(data,this,account);
+            myList.setAdapter(recmen);
+        }else if(filter.equals("meat")) {
+            recmen = new MenuAdapterBig(filtered, this, account);
+            myList.setAdapter(recmen);
+        }
     }
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data){
@@ -166,22 +139,8 @@ public class MenuList extends AppCompatActivity
                 MenuData update = (MenuData) data.getSerializableExtra("update");
                 this.data.set(pos, update);
                 recmen.notifyDataSetChanged();
-                newmen.notifyDataSetChanged();
             }
         }
-    }
-    @Override
-    public void onPause(){
-        handler.removeCallbacks(run);
-        status=false;
-        super.onPause();
-    }
-    @Override
-    public void onResume(){
-        if(!status) {
-            handler.postDelayed(run, 5000);
-        }
-        super.onResume();
     }
     @Override
     public void onBackPressed() {
@@ -198,12 +157,11 @@ public class MenuList extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
         String filter="";
-        Intent fill= new Intent(getApplicationContext(),MenuFilter.class);
-        fill.putExtra("user",account);
         if (id == R.id.menuAll) {
+            filter="all";
             // Handle the camera action
         } else if (id == R.id.menuMeat) {
-
+            filter="meat";
         } else if (id == R.id.menuSalad) {
 
         } else if (id == R.id.menuDessert) {
@@ -219,17 +177,11 @@ public class MenuList extends AppCompatActivity
         }else if (id == R.id.menuSoup) {
 
         } else  {
-            DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-            drawer.closeDrawer(GravityCompat.START);
-            return true;
-        }
 
-        fill.putExtra("filter",filter);
-        getApplicationContext().startActivity(fill);
+        }
+        changeFillter(filter);
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-
-
 }
-
-

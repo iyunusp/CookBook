@@ -177,25 +177,37 @@ public class RecipeItemView extends AppCompatActivity
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
         int id = item.getItemId();
-
-        /*if (id == R.id.menuBacon) {
+        String filter="";
+        Intent fill= new Intent(getApplicationContext(),MenuFilter.class);
+        fill.putExtra("user",account);
+        if (id == R.id.menuAll) {
             // Handle the camera action
-        } else if (id == R.id.menuBeef) {
+        } else if (id == R.id.menuMeat) {
 
-        } else if (id == R.id.menuChicken) {
+        } else if (id == R.id.menuSalad) {
 
-        } else if (id == R.id.menuSnack) {
+        } else if (id == R.id.menuDessert) {
 
-        } else if (id == R.id.menuSeafood) {
+        } else if (id == R.id.menuQuick) {
 
-        } else if (id == R.id.nav_send || id==R.id.nav_share) {
+        }else if (id == R.id.menuLow) {
 
-        }*/
+        }else if (id == R.id.menuFried) {
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
+        }else if (id == R.id.menuBaked) {
+
+        }else if (id == R.id.menuSoup) {
+
+        } else  {
+            DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+            drawer.closeDrawer(GravityCompat.START);
+            return true;
+        }
+
+        fill.putExtra("filter",filter);
+        getApplicationContext().startActivity(fill);
+        finish();
         return true;
     }
 

@@ -11,23 +11,33 @@
         android:label="@string/app_name"
         android:supportsRtl="false"
         android:theme="@style/AppTheme">
-        <activity android:name=".Login" android:screenOrientation="portrait">
+        <activity
+            android:name=".Login"
+            android:screenOrientation="portrait">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action
+                    android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category
+                    android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".MenuList"
-            android:label="@string/title_activity_menu_list"
             android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait"/>
-        <activity android:name=".Register" android:screenOrientation="portrait"/>
-        <activity android:name=".Preview_menu" android:screenOrientation="portrait"/>
+        <activity
+            android:name=".Register"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".Preview_menu"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".MenuFilter"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".RecipeItemView"
-            android:label="@string/title_activity_recipe_item_view"
             android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait"></activity>
     </application>
