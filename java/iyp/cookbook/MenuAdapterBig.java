@@ -60,7 +60,7 @@ public class MenuAdapterBig extends RecyclerView.Adapter<MenuAdapterBig.MyViewHo
                 Intent intent=new Intent(context,RecipeItemView.class);
                 intent.putExtra("menu",horizontalList.get(position));
                 intent.putExtra("user",account);
-                MenuList.pos=position;
+                MenuFilter.pos=position;
                 ((Activity)context).startActivityForResult(intent,2);
             }
         });
