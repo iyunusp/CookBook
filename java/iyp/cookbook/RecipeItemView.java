@@ -228,7 +228,7 @@ public class RecipeItemView extends AppCompatActivity
         step.enableStep();
     }
 
-    public class SectionsPagerAdapter extends FragmentPagerAdapter {
+    private class SectionsPagerAdapter extends FragmentPagerAdapter {
         public SectionsPagerAdapter(FragmentManager fm) {
             super(fm);
         }
@@ -237,7 +237,7 @@ public class RecipeItemView extends AppCompatActivity
         public Fragment getItem(int position) {
             switch(position){
                 case 1:return MenuIngredientsFragment.newInstance(menu.imageID,menu.ingredients,viewpager);
-                case 2:return step=MenuStepsFragment.newInstance();
+                case 2:return step=MenuStepsFragment.newInstance(menu.steps);
                 case 3:return MenuCommunityFragment.newInstance(account.getUname(),account.getImageID(),menu.comments);
                 default:{
                     overview.setBackgroundColor(getResources().getColor(R.color.colorAccent));

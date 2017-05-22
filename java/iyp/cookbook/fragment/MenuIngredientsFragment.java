@@ -18,7 +18,7 @@ import android.widget.Toast;
 import java.util.Collections;
 import java.util.List;
 
-import iyp.cookbook.IngredientAdapter;
+import iyp.cookbook.adapter.IngredientAdapter;
 import iyp.cookbook.R;
 import iyp.cookbook.listing.IngredientData;
 

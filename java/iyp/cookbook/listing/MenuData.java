@@ -8,13 +8,14 @@ import java.util.List;
  */
 
 public class MenuData implements Serializable {
-    public String Title, Desc;
-    public int imageID, recipeID,recipeCategory, minute;
+    public String Title, Desc,tag;
+    public int imageID, recipeID, minute;
     public float star=0;
     public List<IngredientData> ingredients;
     public List<CommentData> comments;
+    public List<StepData>steps;
     //TODO Steps
-    public MenuData(String Title,String Desc, int imageID,int recipeID,List<IngredientData> ingredients,int minute,List<CommentData> comments) {
+    public MenuData(String Title,String Desc,String tag, int imageID,int recipeID,List<IngredientData> ingredients,int minute,List<CommentData> comments,List<StepData> steps) {
         this.imageID=imageID;
         this.Desc=Desc;
         this.Title = Title;
@@ -22,6 +23,8 @@ public class MenuData implements Serializable {
         this.ingredients=ingredients;
         this.minute=minute;
         this.comments=comments;
+        this.tag=tag;
+        this.steps=steps;
         calcStar();
     }
     public void calcStar(){

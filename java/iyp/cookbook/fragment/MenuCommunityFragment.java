@@ -20,7 +20,7 @@ import android.widget.Toast;
 
 import java.util.List;
 
-import iyp.cookbook.CommentAdapter;
+import iyp.cookbook.adapter.CommentAdapter;
 import iyp.cookbook.R;
 import iyp.cookbook.listing.CommentData;
 

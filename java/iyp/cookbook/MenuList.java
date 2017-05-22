@@ -26,9 +26,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import iyp.cookbook.account.Account;
+import iyp.cookbook.adapter.MenuAdapter;
 import iyp.cookbook.listing.CommentData;
 import iyp.cookbook.listing.IngredientData;
 import iyp.cookbook.listing.MenuData;
+import iyp.cookbook.listing.StepData;
 
 public class MenuList extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -73,17 +75,28 @@ public class MenuList extends AppCompatActivity
         com1.add(new CommentData("joko",R.mipmap.icon,"bagus",4));
         com1.add(new CommentData("anwar",R.mipmap.icon,"mantap",5));
         com1.add(new CommentData("prabowo",R.mipmap.icon,"gokil",3));
+        List<StepData>step1= new ArrayList<>();
+        step1.add(new StepData("masukkan air",0));
+        step1.add(new StepData("rebus air",0));
+        step1.add(new StepData("angkat air",0));
         data= new ArrayList<>();
-        data.add(new MenuData( "Menu 1", "ini itu adalah menu 1 yang paling enak",R.drawable.belakangprofilepicture,0,ingredients,60,com1));
+        data.add(new MenuData( "Menu 1", "ini itu adalah menu 1 yang paling enak","",R.drawable.belakangprofilepicture,0,ingredients,60,com1,step1));
         List<CommentData> com2= new ArrayList<>();
+        List<StepData>step2= new ArrayList<>();
+        step2.add(new StepData("potong ayam",0));
+        step2.add(new StepData("siapkan air mendidih ayam",0));
+        step2.add(new StepData("rebus ayam",0));
+        step2.add(new StepData("angkat ayam",0));
+        step2.add(new StepData("goreng ayam",0));
+        step2.add(new StepData("angkat ayam",0));
         ingredients.add(new IngredientData("onta",R.drawable.soups,222));
         com2.add(new CommentData("prabowo",R.mipmap.icon,"gokil",4));
         com2.add(new CommentData("prabowo",R.mipmap.icon,"gokil",(float)2.5));
-        data.add(new MenuData( "Menu 2", "ini itu adalah menu 2 yang paling biasa aja", R.drawable.belakangprofilepicture,1,ingredients,60,com2));
+        data.add(new MenuData( "Menu 2", "ini itu adalah menu 2 yang paling biasa aja","", R.drawable.belakangprofilepicture,1,ingredients,60,com2,step2));
         List<CommentData> com3= new ArrayList<>();
         ingredients.add(new IngredientData("ssss",R.drawable.soups,3343));
         com3.add(new CommentData("prabowo",R.mipmap.icon,"gokil",(float)0.5));
-        data.add(new MenuData( "Menu 3", "ini itu adalah menu 3 yang paling ga enak", R.drawable.belakangprofilepicture,2,ingredients,60,com3));
+        data.add(new MenuData( "Menu 3", "ini itu adalah menu 3 yang paling ga enak","", R.drawable.belakangprofilepicture,2,ingredients,60,com3,step1));
         /*data.add(new Data("", "Image 2"));
         data.add(new Data( "", "Image 3"));
         data.add(new Data( "", "Image 1"));

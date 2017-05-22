@@ -1,4 +1,4 @@
-package iyp.cookbook;
+package iyp.cookbook.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -14,6 +14,7 @@ import android.widget.TextView;
 import java.util.Collections;
 import java.util.List;
 
+import iyp.cookbook.R;
 import iyp.cookbook.listing.CommentData;
 
 public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.MyViewHolder> {

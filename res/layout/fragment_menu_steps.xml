@@ -13,5 +13,9 @@
         android:text="Step is Locked"
         android:background="#AAAAAA"
         android:textColor="#FFFFFF"/>
+    <iyp.cookbook.fragment.VerticalViewPager
+        android:layout_width="match_parent"
+        android:id="@+id/stepPager"
+        android:layout_height="match_parent"></iyp.cookbook.fragment.VerticalViewPager>
 
 </FrameLayout>

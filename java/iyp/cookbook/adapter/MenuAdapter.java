@@ -1,4 +1,4 @@
-package iyp.cookbook;
+package iyp.cookbook.adapter;
 
 import android.app.Activity;
 import android.content.Context;
@@ -13,6 +13,9 @@ import android.widget.TextView;
 import java.util.Collections;
 import java.util.List;
 
+import iyp.cookbook.MenuList;
+import iyp.cookbook.R;
+import iyp.cookbook.RecipeItemView;
 import iyp.cookbook.account.Account;
 import iyp.cookbook.listing.MenuData;
 
