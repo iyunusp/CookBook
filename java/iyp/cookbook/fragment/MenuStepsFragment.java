@@ -10,7 +10,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.PagerAdapter;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,8 +41,17 @@ public class MenuStepsFragment extends Fragment implements SensorEventListener{
             timestamp= System.currentTimeMillis();
             senseAvail=true;
         }catch (Exception e){
-            Log.e("sensorAlert",e.getMessage()+"");
         }
+    }
+    @Override
+    public void onResume(){
+        super.onResume();
+        senseMan.registerListener(this, sense, SensorManager.SENSOR_DELAY_NORMAL);
+    }
+    @Override
+    public void onPause(){
+        super.onPause();
+        senseMan.unregisterListener(this);
     }
     public MenuStepsFragment(){
 
@@ -85,9 +93,9 @@ public class MenuStepsFragment extends Fragment implements SensorEventListener{
             }
             section.addView (v0, steps.indexOf(step));
         }
+        testsensor();
         section.notifyDataSetChanged();
         StepUI.setVisibility(View.INVISIBLE);
-        testsensor();
         return v;
     }
 

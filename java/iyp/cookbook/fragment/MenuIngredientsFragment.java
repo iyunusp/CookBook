@@ -11,15 +11,15 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import java.util.Collections;
 import java.util.List;
 
-import iyp.cookbook.adapter.IngredientAdapter;
 import iyp.cookbook.R;
+import iyp.cookbook.adapter.IngredientAdapter;
 import iyp.cookbook.listing.IngredientData;
 
 
@@ -73,8 +73,8 @@ public class MenuIngredientsFragment extends Fragment {
         View v=inflater.inflate(R.layout.fragment_menu_ingrendients, container, false);
         image=(ImageView)v.findViewById(R.id.menuImageIngredient);
         image.setImageResource(imageId);
-        ImageButton cook=(ImageButton)v.findViewById(R.id.ingredientOrder),
-                start=(ImageButton)v.findViewById(R.id.ingredientStart);
+        Button cook=(Button)v.findViewById(R.id.ingredientOrder),
+                start=(Button)v.findViewById(R.id.ingredientStart);
         start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

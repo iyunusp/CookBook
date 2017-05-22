@@ -8,7 +8,7 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -57,8 +57,8 @@ public class MenuOverviewFragment extends Fragment{
                 des=(TextView)v.findViewById(R.id.menuTitleDesc),
                 min=(TextView)v.findViewById(R.id.menuTitleMinute);
         str=(TextView)v.findViewById(R.id.menuTitleStar);
-        ImageButton cook=(ImageButton)v.findViewById(R.id.overviewOrder),
-                start=(ImageButton)v.findViewById(R.id.overviewStart);
+        Button cook=(Button)v.findViewById(R.id.overviewOrder),
+                start=(Button)v.findViewById(R.id.overviewStart);
         start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

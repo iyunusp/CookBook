@@ -73,14 +73,16 @@
             android:layout_weight="1.25"
             android:padding="10dp"
             android:orientation="horizontal">
-            <ImageButton
+            <Button
                 android:id="@+id/overviewStart"
                 android:layout_width="0dp"
+                android:text="Next"
                 android:layout_height="match_parent"
                 android:layout_weight="1"/>
-            <ImageButton
+            <Button
                 android:id="@+id/overviewOrder"
                 android:layout_width="0dp"
+                android:text="Order"
                 android:layout_height="match_parent"
                 android:layout_weight="1"/>
         </LinearLayout>
