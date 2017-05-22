@@ -2,7 +2,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="iyp.cookbook.fragment.MenuOverviewFragment">
+    tools:context="iyp.cookbook.fragment.MenuOverviewFragment"
+    android:paddingTop="3dp">
 
     <!-- TODO: Update blank fragment customrating -->
     <LinearLayout

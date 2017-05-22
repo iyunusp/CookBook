@@ -184,22 +184,22 @@ public class RecipeItemView extends AppCompatActivity
         if (id == R.id.menuAll) {
             // Handle the camera action
         } else if (id == R.id.menuMeat) {
-
+            filter="meat";
         } else if (id == R.id.menuSalad) {
-
+            filter="salad";
         } else if (id == R.id.menuDessert) {
-
+            filter="dessert";
         } else if (id == R.id.menuQuick) {
-
+            filter="quick";
         }else if (id == R.id.menuLow) {
-
+            filter="low";
         }else if (id == R.id.menuFried) {
-
+            filter="fried";
         }else if (id == R.id.menuBaked) {
-
+            filter="baked";
         }else if (id == R.id.menuSoup) {
-
-        } else  {
+            filter="soup";
+        }else  {
             DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
             drawer.closeDrawer(GravityCompat.START);
             return true;
