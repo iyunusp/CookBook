@@ -218,9 +218,10 @@ public class MenuFilter extends AppCompatActivity
         menuchart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getApplicationContext(),"your chart are empty", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(),"your Bookmark are empty", Toast.LENGTH_SHORT).show();
             }
         });
+
         this.account=(Account) getIntent().getSerializableExtra("user");
         init();
 
@@ -275,6 +276,11 @@ public class MenuFilter extends AppCompatActivity
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode==2){
             if(resultCode==RESULT_OK) {
+                boolean a=data.getBooleanExtra("HOME",false);
+                if(a){
+                    finish();
+                    return;
+                }
                 MenuData update = (MenuData) data.getSerializableExtra("update");
                 this.data.set(pos, update);
                 recmen.notifyDataSetChanged();

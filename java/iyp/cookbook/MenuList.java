@@ -181,7 +181,7 @@ public class MenuList extends AppCompatActivity
         menuchart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getApplicationContext(),"your chart are empty", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(),"your Bookmark are empty", Toast.LENGTH_SHORT).show();
             }
         });
         //TODO database reader ASAP
@@ -252,17 +252,18 @@ public class MenuList extends AppCompatActivity
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode==2){
             if(resultCode==RESULT_OK) {
+                if(data.getBooleanExtra("HOME",true)){
+                    return;
+                }
                 MenuData update = (MenuData) data.getSerializableExtra("update");
-                if(update.Title.equals(recs.get(pos).Title)) {
+                if (update.Title.equals(recs.get(pos).Title)) {
                     this.recs.set(pos, update);
                     recmen.notifyDataSetChanged();
                 }
-                if(update.Title.equals(news.get(pos).Title)){
+                if (update.Title.equals(news.get(pos).Title)) {
                     this.news.set(pos, update);
                     newmen.notifyDataSetChanged();
                 }
-
-
             }
         }
     }
@@ -315,13 +316,15 @@ public class MenuList extends AppCompatActivity
         }else if (id == R.id.menuSoup) {
             filter="soup";
         }else  {
-            DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-            drawer.closeDrawer(GravityCompat.START);
+            filter="n";
             return true;
         }
-
-        fill.putExtra("filter",filter);
-        getApplicationContext().startActivity(fill);
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+        if(!filter.equals("n")) {
+            fill.putExtra("filter", filter);
+            getApplicationContext().startActivity(fill);
+        }
         return true;
     }
 

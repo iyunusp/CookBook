@@ -46,7 +46,7 @@ public class MenuStepsFragment extends Fragment implements SensorEventListener{
     @Override
     public void onResume(){
         super.onResume();
-        senseMan.registerListener(this, sense, SensorManager.SENSOR_DELAY_NORMAL);
+        senseMan.registerListener(this, sense, SensorManager.SENSOR_DELAY_UI);
     }
     @Override
     public void onPause(){

@@ -72,16 +72,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal">
-                <ImageButton
+                <Button
+                    android:id="@+id/homeButton"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:background="#00FF00"
+                    android:text="HOME"
                     android:stateListAnimator="@animator/buttonanim"
                     android:layout_weight="0.5"/>
-                <ImageButton
+                <Button
+                    android:id="@+id/orderButton"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:background="#0000FF"
+                    android:text="CHART"
                     android:stateListAnimator="@animator/buttonanim"
                     android:layout_weight="0.5"/>
             </LinearLayout>

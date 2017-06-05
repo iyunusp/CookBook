@@ -17,6 +17,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -56,6 +57,7 @@ public class RecipeItemView extends AppCompatActivity
         setContentView(R.layout.activity_recipe_item_view);
         TextView profilUname, profilMail;
         ImageView profilImage, menuchart;
+        Button home,order;
 
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -64,7 +66,17 @@ public class RecipeItemView extends AppCompatActivity
         menuchart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getApplicationContext(), "your chart are empty", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "your Bookmark are empty", Toast.LENGTH_SHORT).show();
+            }
+        });
+        home= (Button)findViewById(R.id.homeButton);
+        home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent();
+                intent.putExtra("HOME", true);
+                setResult(RESULT_OK, intent);
+                finish();
             }
         });
         //passing user detail
@@ -180,6 +192,7 @@ public class RecipeItemView extends AppCompatActivity
         int id = item.getItemId();
         String filter="";
         Intent fill= new Intent(getApplicationContext(),MenuFilter.class);
+        fill.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         fill.putExtra("user",account);
         if (id == R.id.menuAll) {
             // Handle the camera action
@@ -207,7 +220,7 @@ public class RecipeItemView extends AppCompatActivity
 
         fill.putExtra("filter",filter);
         getApplicationContext().startActivity(fill);
-        finish();
+        //finish();
         return true;
     }
 
